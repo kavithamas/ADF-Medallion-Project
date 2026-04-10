@@ -1,10 +1,10 @@
 name: ADF Medallion CD Pipeline
 
 on:
-  workflow_dispatch:  # This allows you to click the manual "Run" button
+  workflow_dispatch:
   push:
     branches:
-      - adf_publish  # This triggers when you click 'Publish' in ADF
+      - adf_publish
 
 jobs:
   deploy:
@@ -23,9 +23,8 @@ jobs:
       - name: Deploy ARM Template
         uses: azure/arm-deploy@v1
         with:
-          # Changed to your actual resource group name
+          # Change this line below to kavidatafact
           resourceGroupName: kavidatafact 
-          # Points to the folder discovered in your repository
           template: ./kavithamas/ARMTemplateForFactory.json
           parameters: ./kavithamas/ARMTemplateParametersForFactory.json
           deploymentMode: Incremental
