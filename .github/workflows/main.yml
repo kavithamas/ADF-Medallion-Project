@@ -23,9 +23,7 @@ jobs:
       - name: Deploy ARM Template
         uses: azure/arm-deploy@v1
         with:
-          # Deploying to the new, unlocked group created in Cloud Shell
           resourceGroupName: rg-adf-deployment 
-          # Paths configured to match your repository structure
           template: ./kavithamas/ARMTemplateForFactory.json
-          parameters: ./kavithamas/ARMTemplateParametersForFactory.json
+          parameters: ./kavithamas/ARMTemplateParametersForFactory.json factoryName=kavithamas-medallion
           deploymentMode: Incremental
