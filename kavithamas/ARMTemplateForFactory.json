@@ -68,6 +68,7 @@
 				"activities": [
 					{
 						"name": "Lkp_OldWatermark",
+						"description": "    ",
 						"type": "Lookup",
 						"dependsOn": [],
 						"policy": {
