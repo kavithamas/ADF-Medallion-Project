@@ -1,16 +1,14 @@
-name: ADF Medallion CD Pipeline
+name: CD Pipeline
 
 on:
-  workflow_dispatch:  # Allows manual triggers from the Actions tab
-  push:
-    branches:
-      - adf_publish  # Triggers automatically when you publish in ADF
+  workflow_dispatch:
 
 jobs:
-  deploy:
+  deploy-dev:
+    name: deploy-dev
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Publish Branch
+      - name: Checkout
         uses: actions/checkout@v3
         with:
           ref: adf_publish
@@ -18,12 +16,58 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          creds: ${{ secrets.AZURE_CREDENTIALS_MULTISTAGE }}
 
-      - name: Deploy ARM Template
+      - name: Deploy to Dev
         uses: azure/arm-deploy@v1
         with:
-          resourceGroupName: rg-adf-deployment 
+          resourceGroupName: rg-adf-dev
           template: ./kavithamas/ARMTemplateForFactory.json
-          parameters: ./kavithamas/ARMTemplateParametersForFactory.json factoryName=kavithamas-medallion
+          parameters: ./kavithamas/ARMTemplateParametersForFactory.json factoryName=kavithamas-dev
+          deploymentMode: Incremental
+
+  deploy-test:
+    name: deploy-test
+    needs: deploy-dev
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: adf_publish
+
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS_MULTISTAGE }}
+
+      - name: Deploy to Test
+        uses: azure/arm-deploy@v1
+        with:
+          resourceGroupName: rg-adf-test
+          template: ./kavithamas/ARMTemplateForFactory.json
+          parameters: ./kavithamas/ARMTemplateParametersForFactory.json factoryName=kavithamas-test
+          deploymentMode: Incremental
+
+  deploy-prod:
+    name: deploy-prod
+    needs: deploy-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: adf_publish
+
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS_MULTISTAGE }}
+
+      - name: Deploy to Prod
+        uses: azure/arm-deploy@v1
+        with:
+          resourceGroupName: rg-adf-prod
+          template: ./kavithamas/ARMTemplateForFactory.json
+          parameters: ./kavithamas/ARMTemplateParametersForFactory.json factoryName=kavithamas-prod
           deploymentMode: Incremental
