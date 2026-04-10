@@ -1,10 +1,11 @@
 name: ADF Medallion CD Pipeline
 
 on:
-  workflow_dispatch:  # This adds the manual "Run" button
+  workflow_dispatch:  # This adds the manual "Run" button so you can test it anytime
   push:
     branches:
-      - adf_publish
+      - adf_publish  # This triggers automatically when you click 'Publish' in ADF
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -17,12 +18,12 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}  # Uses the secret you saved
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Deploy ARM Template
         uses: azure/arm-deploy@v1
         with:
           resourceGroupName: rg-kavi-data
-          # Modified paths to look in the root directory instead of a subfolder
-          template: ./ARMTemplateForFactory.json
-          parameters: ./ARMTemplateParametersForFactory.json
+          # Updated paths to include the /kavithamas/ folder found in your repo
+          template: ./kavithamas/ARMTemplateForFactory.json
+          parameters: ./kavithamas/ARMTemplateParametersForFactory.json
