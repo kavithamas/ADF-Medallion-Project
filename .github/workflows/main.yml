@@ -1,10 +1,10 @@
 name: ADF Medallion CD Pipeline
 
 on:
+  workflow_dispatch:  # This adds the manual "Run" button
   push:
     branches:
-      - adf_publish  # This triggers when you click 'Publish' in Data Factory
-
+      - adf_publish
 jobs:
   deploy:
     runs-on: ubuntu-latest
