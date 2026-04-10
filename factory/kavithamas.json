@@ -1,0 +1,9 @@
+{
+	"name": "kavithamas",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "2bea2404-3175-4914-b29e-343e2616a7a6",
+		"tenantId": "ef4dd89e-da14-48fe-aeae-e76723a67f54"
+	}
+}

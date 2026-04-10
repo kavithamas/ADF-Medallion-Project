@@ -1,0 +1,82 @@
+{
+	"name": "SourceBronzeSales",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_bronze_sales_parquet",
+						"type": "DatasetReference"
+					},
+					"name": "SourceBronzeSales"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_silver_sales",
+						"type": "DatasetReference"
+					},
+					"name": "SinkSilverSales"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_gold_sales",
+						"type": "DatasetReference"
+					},
+					"name": "SinkGoldSales"
+				}
+			],
+			"transformations": [
+				{
+					"name": "filter1"
+				},
+				{
+					"name": "aggregate1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          transaction_id as string,",
+				"          order_date as string,",
+				"          channel as string,",
+				"          store_id as string,",
+				"          product_id as string,",
+				"          customer_id as string,",
+				"          quantity as string,",
+				"          unit_price as string,",
+				"          discount as string,",
+				"          total_amount as integer,",
+				"          payment_type as string,",
+				"          ingestion_timestamp as string,",
+				"          ingestion_time as timestamp",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet',",
+				"     wildcardPaths:['sales/*.parquet']) ~> SourceBronzeSales",
+				"SourceBronzeSales filter(!isNull(transaction_id) && total_amount > 0) ~> filter1",
+				"filter1 aggregate(groupBy(store_id),",
+				"     TotalRevenue = sum(total_amount)) ~> aggregate1",
+				"filter1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SinkSilverSales",
+				"aggregate1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SinkGoldSales"
+			]
+		}
+	}
+}

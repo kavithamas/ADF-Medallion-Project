@@ -1,0 +1,21 @@
+{
+	"name": "ds_gold_sales",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_AzureDataLake_Bronze",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "sales_summary",
+				"fileSystem": "gold"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

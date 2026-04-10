@@ -1,0 +1,74 @@
+{
+	"name": "ds_bronze_sales_parquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_AzureDataLake_Bronze",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "sales",
+				"fileSystem": "bronze"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "transaction_id",
+				"type": "UTF8"
+			},
+			{
+				"name": "order_date",
+				"type": "UTF8"
+			},
+			{
+				"name": "channel",
+				"type": "UTF8"
+			},
+			{
+				"name": "store_id",
+				"type": "UTF8"
+			},
+			{
+				"name": "product_id",
+				"type": "UTF8"
+			},
+			{
+				"name": "customer_id",
+				"type": "UTF8"
+			},
+			{
+				"name": "quantity",
+				"type": "UTF8"
+			},
+			{
+				"name": "unit_price",
+				"type": "UTF8"
+			},
+			{
+				"name": "discount",
+				"type": "UTF8"
+			},
+			{
+				"name": "total_amount",
+				"type": "UTF8"
+			},
+			{
+				"name": "payment_type",
+				"type": "UTF8"
+			},
+			{
+				"name": "ingestion_timestamp",
+				"type": "UTF8"
+			},
+			{
+				"name": "ingestion_time",
+				"type": "INT96"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
