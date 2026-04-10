@@ -23,7 +23,7 @@ jobs:
       - name: Deploy ARM Template
         uses: azure/arm-deploy@v1
         with:
-          resourceGroupName: kavidatafact 
+          resourceGroupName: kavidatafact
           template: ./kavithamas/ARMTemplateForFactory.json
           parameters: ./kavithamas/ARMTemplateParametersForFactory.json
           deploymentMode: Incremental
