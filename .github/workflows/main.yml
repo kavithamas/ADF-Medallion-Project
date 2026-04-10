@@ -1,7 +1,6 @@
 name: ADF Medallion CD Pipeline
-
 on:
-  workflow_dispatch:
+  workflow_dispatch:  # This is the line GitHub is looking for
   push:
     branches:
       - adf_publish
