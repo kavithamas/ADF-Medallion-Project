@@ -17,11 +17,12 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          creds: ${{ secrets.AZURE_CREDENTIALS }}  # Uses the secret you saved
 
       - name: Deploy ARM Template
         uses: azure/arm-deploy@v1
         with:
           resourceGroupName: rg-kavi-data
-          template: ./kavithamas/ARMTemplateForFactory.json
-          parameters: ./kavithamas/ARMTemplateParametersForFactory.json
+          # Modified paths to look in the root directory instead of a subfolder
+          template: ./ARMTemplateForFactory.json
+          parameters: ./ARMTemplateParametersForFactory.json
