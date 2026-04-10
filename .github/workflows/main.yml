@@ -1,0 +1,27 @@
+name: ADF Medallion CD Pipeline
+
+on:
+  push:
+    branches:
+      - adf_publish  # This triggers when you click 'Publish' in Data Factory
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Publish Branch
+        uses: actions/checkout@v3
+        with:
+          ref: adf_publish
+
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy ARM Template
+        uses: azure/arm-deploy@v1
+        with:
+          resourceGroupName: rg-kavi-data
+          template: ./kavithamas/ARMTemplateForFactory.json
+          parameters: ./kavithamas/ARMTemplateParametersForFactory.json
