@@ -1,0 +1,51 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "kavithamas"
+		},
+		"AzureBlobStorage1_connectionString": {
+			"value": ""
+		},
+		"AzureDatabricksDeltaLake1_accessToken": {
+			"value": ""
+		},
+		"AzureSqlDatabase1_password": {
+			"value": ""
+		},
+		"ls_AzureDataLake_Bronze_accountKey": {
+			"value": ""
+		},
+		"ls_AzureSql_Retail_password": {
+			"value": ""
+		},
+		"AzureSqlDatabase1_properties_typeProperties_server": {
+			"value": "kavidatalake2026.database.windows.net"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_database": {
+			"value": "retail_metadata_db"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_userName": {
+			"value": "CloudSA3036f77e"
+		},
+		"ls_AzureDataLake_Bronze_properties_typeProperties_url": {
+			"value": "https://kavidatalake2026.dfs.core.windows.net/"
+		},
+		"ls_AzureSql_Retail_properties_typeProperties_server": {
+			"value": "kavidatalake2026.database.windows.net"
+		},
+		"ls_AzureSql_Retail_properties_typeProperties_database": {
+			"value": "retail_metadata_db"
+		},
+		"ls_AzureSql_Retail_properties_typeProperties_userName": {
+			"value": "CloudSA3036f77e"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
