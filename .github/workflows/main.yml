@@ -23,7 +23,7 @@ jobs:
       - name: Deploy ARM Template
         uses: azure/arm-deploy@v1
         with:
-          # Change this line below to kavidatafact
+          # This MUST be kavidatafact to match your subscription
           resourceGroupName: kavidatafact 
           template: ./kavithamas/ARMTemplateForFactory.json
           parameters: ./kavithamas/ARMTemplateParametersForFactory.json
