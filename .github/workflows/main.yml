@@ -1,9 +1,10 @@
 name: ADF Medallion CD Pipeline
+
 on:
-  workflow_dispatch:  # This is the line GitHub is looking for
+  workflow_dispatch:  # Allows manual triggers from the Actions tab
   push:
     branches:
-      - adf_publish
+      - adf_publish  # Triggers automatically when you publish in ADF
 
 jobs:
   deploy:
@@ -22,8 +23,9 @@ jobs:
       - name: Deploy ARM Template
         uses: azure/arm-deploy@v1
         with:
-          # This MUST be kavidatafact to match your subscription
-          resourceGroupName: kavidatafact 
+          # Deploying to the new, unlocked group created in Cloud Shell
+          resourceGroupName: rg-adf-deployment 
+          # Paths configured to match your repository structure
           template: ./kavithamas/ARMTemplateForFactory.json
           parameters: ./kavithamas/ARMTemplateParametersForFactory.json
           deploymentMode: Incremental
